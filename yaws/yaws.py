@@ -22,18 +22,18 @@ def main():
     access_key = config.get(profile, 'aws_access_key_id')
     secret_key = config.get(profile, 'aws_secret_access_key')
     if config.has_option(profile, 'aws_session_token'):
-    	session_token = config.get(profile, 'aws_session_token')
+        session_token = config.get(profile, 'aws_session_token')
     else:
-	session_token = ''
+        session_token = ''
 
     if args.command == 'export':
-        print 'export AWS_ACCESS_KEY_ID='+access_key
-        print 'export AWS_SECRET_ACCESS_KEY='+secret_key
-        print 'export AWS_DEFAULT_REGION='+region
-        print 'export AWS_SESSION_TOKEN='+session_token
+        print ('export AWS_ACCESS_KEY_ID='+access_key)
+        print ('export AWS_SECRET_ACCESS_KEY='+secret_key)
+        print ('export AWS_DEFAULT_REGION='+region)
+        print ('export AWS_SESSION_TOKEN='+session_token)
     elif args.command == 'rotate-keys':
-	if session_token != '':
-            print 'The key pair has session_token and cannot be rotated as it is already temporary'
+        if session_token != '':
+            print('The key pair has session_token and cannot be rotated as it is already temporary')
             sys.exit(1)
         iam = boto3.client('iam', aws_access_key_id=access_key, aws_secret_access_key=secret_key)
         keys = iam.list_access_keys()
