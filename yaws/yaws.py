@@ -1,4 +1,9 @@
-import ConfigParser
+try:
+    # Python 2.x
+    import ConfigParser
+except:
+    # Python 3.x
+    import configparser as ConfigParser
 import os
 import argparse
 import boto3
