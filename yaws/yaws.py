@@ -9,6 +9,8 @@ import argparse
 import boto3
 import sys
 
+import platform
+
 def main():
     parser = argparse.ArgumentParser(description='Loopingz AWS utilities')
     parser.add_argument('--profile', default='default', help='AWS Profile to use')
@@ -32,10 +34,19 @@ def main():
         session_token = ''
 
     if args.command == 'export':
-        print ('export AWS_ACCESS_KEY_ID='+access_key)
-        print ('export AWS_SECRET_ACCESS_KEY='+secret_key)
-        print ('export AWS_DEFAULT_REGION='+region)
-        print ('export AWS_SESSION_TOKEN='+session_token)
+        if platform.system()!='Windows':
+            print ('export AWS_ACCESS_KEY_ID='+access_key)
+            print ('export AWS_SECRET_ACCESS_KEY='+secret_key)
+            print ('export AWS_DEFAULT_REGION='+region)
+            print ('export AWS_SESSION_TOKEN='+session_token)
+        else:
+            variables = [
+                '$AWS_ACCESS_KEY_ID="'+access_key+'"',
+                '$AWS_SECRET_ACCESS_KEY="'+secret_key+'"',
+                '$AWS_DEFAULT_REGION="'+region+'"',
+                '$AWS_SESSION_TOKEN="'+session_token+'"'
+            ]
+            print(';'.join(variables))
     elif args.command == 'rotate-keys':
         if session_token != '':
             print('The key pair has session_token and cannot be rotated as it is already temporary')
