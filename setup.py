@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='yaws',
-    version='1.2.0',
+    version='1.3.0',
     description='Utils for AWS cloud',
     url='https://github.com/loopingz/yaws',
     author='Loopingz',
